@@ -1,0 +1,100 @@
+<html>
+
+<head>
+  <title>SearchBuilder Example: 1960's Cars</title>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="reset.css"/>
+  <link rel="stylesheet" type="text/css" href="../src/searchbuilder.css"/>
+  <script type="text/javascript" src="jquery-2.0.2.min.js"></script>
+  <script type="text/javascript" src="cars_db.js"></script>
+  <script type="text/javascript" src="../src/searchbuilder.js"></script>
+
+  <style type="text/css">
+    body { margin: 1em; background: #aa8; }
+    pre { font-family: monospace; }
+    label { font-family: sans-serif; }
+
+    table#results {
+      width: 100%;
+      border: 1px solid black;
+    }
+    table#results tr.header th {
+      background-color: #333;
+      color: white;
+    }
+    table#results tr:nth-child(6n-1), table#results tr:nth-child(6n+0), table#results tr:nth-child(6n+1) { background-color: #eee; }
+    table#results tr:nth-child(6n+2), table#results tr:nth-child(6n+3), table#results tr:nth-child(6n+4) { background-color: white; }
+    table#results td {
+      padding: 0.5em;
+    }
+    table#results th:nth-child(1) { border-left: none; }
+    table#results th { border-left: 1px solid #ccc; }
+    table#results td:nth-child(1) { border-left: none; }
+    table#results td { border-left: 1px solid #777; }
+    table#results tr:hover { background: #cdf; }
+    table#results th { width: 16%; }
+  </style>
+</head>
+
+<body>
+
+<script>
+var car_search_spec = [
+  {type: "grouping", label: "Manufacture"},
+  {key: "make", label: "Make", type: "string"},
+  {key: "model", label: "Model", type: "string"},
+  {key: "introduced", label: "Introduced", type: "integer"},
+  {key: "country_name", label: "Country", type: "string"},
+  {type: "grouping", label: "Mechanical"},
+  {key: "layout", label: "Layout", type: "enum", params: {choices: ["FR", "FF", "RMR", "FMR"]}},
+  {key: "engine", label: "Engine", type: "string"}
+];
+
+$(function() {
+  $("div.searchbuilder").searchbuilder(car_search_spec, {when: "input"});
+
+  $("div.searchbuilder").bind("searchchanged", function(event) {
+    var search_tree = $(event.currentTarget).searchbuilder_tree();
+
+    var table = $("table#results");
+    table.find("tr.result").remove();
+
+    // for a real website, this would be an ajax call to your database
+    var filtered_cars = carsForSearch(search_tree);
+
+    $.each(filtered_cars, function(i, car) {
+      var row = $("<tr/>").attr({class: "result"}).appendTo(table); 
+      $("<td/>").text(car.make).appendTo(row);
+
+      var modelCell = $("<td/>").appendTo(row);
+      $("<a/>").text(car.model).attr({href: "https://en.wikipedia.org/wiki/" + car.wikipedia}).appendTo(modelCell);
+
+      $("<td/>").text(car.introduced).appendTo(row);
+      $("<td/>").text(car.country_label).appendTo(row);
+      $("<td/>").text(car.layout).appendTo(row);
+      $("<td/>").text(car.engine).appendTo(row);
+    });
+  });
+
+  $("div.searchbuilder").trigger("searchchanged");  // initial view
+});
+</script>
+
+<div class="searchbuilder"></div>
+
+<br/>
+
+<table id="results">
+  <tr class="header">
+    <th>Make</th>
+    <th>Model</th>
+    <th>Introduced</th>
+    <th>Country</th>
+    <th>Layout</th>
+    <th>Engine</th>
+  </tr>
+</table>
+
+</body>
+
+</html>

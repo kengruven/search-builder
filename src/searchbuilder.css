@@ -1,0 +1,46 @@
+div.searchbuilder {
+    background: #eee;
+    border: 1px solid gray;
+}
+
+div.searchbuilder div.header {
+    background-image: -webkit-linear-gradient(top, #eee, #ccc);
+    background-image: linear-gradient(to bottom, #eee, #ccc);
+    padding: 0.5em;
+}
+
+div.searchbuilder div.header > label {
+    font-weight: bold;
+}
+
+div.searchbuilder button.addremove {
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    border: 1px solid darkgray;
+    background-image: -webkit-linear-gradient(top, #fff, #ddd);
+    background-image: linear-gradient(to bottom, #fff, #ddd);
+    font-weight: bolder;  /* no-op in FF? */
+    /* font-size: 75%; */
+    float: right;
+    margin-left: 0.5em;
+}
+div.searchbuilder button.addremove:active {
+    background-image: -webkit-linear-gradient(top, #ccc, #eee);
+    background-image: linear-gradient(to bottom, #ccc, #eee);
+}
+
+div.searchbuilder div.row {
+    border-top: 1px solid white;
+    border-bottom: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+div.searchbuilder div.emptymessage {
+    background: #fba;
+    padding: 0.5em;
+}
