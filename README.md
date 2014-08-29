@@ -9,12 +9,19 @@ queries, using pop-up menus and human-readable attribute names.
 To use this library,
 
  - include jQuery, searchbuilder.js, and searchbuilder.css on your HTML page
+
  - on the page, put an empty:
+
         <div class="searchbuilder"/>
+
  - make a JS call to initialize it:
+
         $(your_div).searchbuilder(spec, options)
+
  - to get the user's query, call:
+
         $(your_div).searchbuilder_tree()
+
  - to watch for when the user edits the query, watch for 'searchchanged' events on your div
 
 You're responsible for sending the query to the server, validating it,
